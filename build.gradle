@@ -1,0 +1,61 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'partners.meat.tms.api'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Springboot
+	implementation('org.springframework.boot:spring-boot-actuator-autoconfigure')
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation('org.springframework.boot:spring-boot-starter-jdbc')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-webflux')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	//Spring
+	implementation('org.springframework.data:spring-data-envers:2.1.0.RELEASE')
+	implementation('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.0.RELEASE')
+	// Jackson
+	implementation('com.fasterxml.jackson.datatype:jackson-datatype-hibernate5')
+	implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.9.7')
+	//Database
+	implementation('mysql:mysql-connector-java:8.0.23')
+	implementation('io.jsonwebtoken:jjwt:0.9.1')
+	// lombok
+	compileOnly 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok:1.18.12'
+	// Spring Data JPA
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'local' : profile
+
+sourceSets {
+	main {
+		resources {
+			srcDirs("src/main/resources", "src/main/resources/profiles")
+		}
+	}
+}
